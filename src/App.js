@@ -1,4 +1,4 @@
-import React from 'react';
+/* import React from 'react';
 import logo from './logo.svg';
 import './App.scss';
 
@@ -21,6 +21,6 @@ function App() {
       </header>
     </div>
   );
-}
-
+} */
+import App from './pages';
 export default App;

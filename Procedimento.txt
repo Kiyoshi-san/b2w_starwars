@@ -1,0 +1,17 @@
+PROCEDIMENTOS
+
+NA PASTA DO PROJETO (b2w)
+- create-react-app b2w_starwars
+
+INSTALANDO O SASS
+https://facebook.github.io/create-react-app/docs/adding-a-sass-stylesheet
+- npm install node-sass --save
+- ALTERAR O NOME DOS ARQUIVOS .css PARA .scss
+
+INSTALANDO O REDUX
+- npm i -D redux react-redux
+
+
+
+
+
