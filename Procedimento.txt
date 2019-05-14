@@ -584,6 +584,67 @@ Por fim, passamos o método mapDispatchToProps como segundo parâmetro do métod
 
 
 
+*******************************************************
+
+
+#############
+AXIOS
+#############
+
+
+#############
+INSTALLING THE AXIOS CLIENT
+#############
+
+/**
+
+AXIOS IS A MODERN AND PROMISE-BASED JAVASCRIPT HTTP CLIENT LIBRARY THAT CAN BE USED BOTH IN THE BROWSER and the server with Node.js. Axios works asynchronously and allows you to make HTTP calls to REST endpoints and consume JSON REST APIs.
+
+Now let's install Axios in our React project using the following command from your project's root folder:
+
+*/
+
+npm install --save axios
+
+
+
+#############
+CONSUMING THE REST API WITH AXIOS
+#############
+
+/**
+
+Now let's see how we can consume JSON data from our third-party API endpoint using the Axios client.
+
+Open the src/App.js file and import the axios library, define the API_URL that holds the URL of our third-party REST API and add a state variable that will be used to hold users after getting them from the REST API:
+
+*/
+
+npm install --save axios
+
+git commit -m "Adicionado o componente Planet e instalado o axios"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

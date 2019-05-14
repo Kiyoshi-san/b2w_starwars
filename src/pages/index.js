@@ -10,6 +10,8 @@ import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { clickButton } from '../actions';
 
+import Planet from "./Planet";
+
 // function App() {
 class App extends Component {
     state = {
@@ -58,9 +60,10 @@ class App extends Component {
                 />
                 <button onClick={() => clickButton(inputValue)}>
                     Click me!
-        </button>
+                </button>
 
                 <h1>{newValue}</h1>
+                <Planet />
 
             </div>
         );
