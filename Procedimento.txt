@@ -1,3 +1,11 @@
+USUARIO TESTE B2W STARWARS
+https://b2w.gupy.io/candidates/applications/3910183/instructions
+
+email: nathaliadiaspestana@gmail.com
+senha: Deusefiel1*
+
+--
+
 PROCEDIMENTOS
 
 NA PASTA DO PROJETO (b2w)
@@ -18,5 +26,566 @@ INSTALANDO O REDUX
 --
 
 CRIAR O pages/index.js E COLOCAR OS CÓDIGOS DO App.js
+
+FICARÁ
+src/App.js
+
+/* import React from 'react';
+import logo from './logo.svg';
+import './App.scss';
+
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
+    </div>
+  );
+} */
+import App from './pages';
+export default App;
+
+--
+
+src/pages/index.js
+
+import React from 'react';
+import logo from '../logo.svg';
+import '../App.scss';
+
+function App() {
+    return (
+        <div className="App">
+            <header className="App-header">
+                <img src={logo} className="App-logo" alt="logo" />
+                <p>
+                    Edit <code>src/App.js</code> and save to reload.
+        </p>
+                <a
+                    className="App-link"
+                    href="https://reactjs.org"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Learn React
+        </a>
+            </header>
+        </div>
+    );
+}
+export default App;
+
+
+
+
+
+
+************************
+
+#############
+ACTIONS
+#############
+
+/**
+
+src/actions/index.js
+
+Aqui a função é a Action Creator, e o que ela retorna, que é o objeto, é a Action. Ao ser disparada, ela comunicará ao Reducer que o type é CLICK_UPDATE_VALUE, além do valor newValue: value que deverá ser atualizado na Store. Novamente aqui, caso prefira usar o mesmo nome para chave e valor, ficará de sua escolha.
+
+*/
+
+import { CLICK_UPDATE_VALUE } from './actionTypes';
+
+export const clickButton = value => ({
+    type: CLICK_UPDATE_VALUE,
+    newValue: value
+})
+
+###
+
+/**
+
+ACTION TYPES
+
+src/actions/actionTypes.js
+
+Os types, que são as Action Types, recomendo separar num arquivo próprio para importarmos apenas as constantes, desta forma, num arquivo:
+
+*/
+
+export const CLICK_UPDATE_VALUE = "CLICK_UPDATE_VALUE";
+
+
+#############
+STORE
+#############
+/**
+
+src/store/index.js
+
+Aqui criamos a Store e dizemos quais são os seus respectivos Reducers. Vamos criá-los adiante.
+
+*/
+
+
+import { createStore } from 'redux';
+import { Reducers } from '../reducers';
+export const Store = createStore(Reducers);
+
+
+#############
+REDUCERS
+#############
+
+/**
+
+COMBINE REDUCER
+
+src/reducers/index.js
+
+Como a Store é a Única Fonte de Verdade, teremos que combinar todos os reducers da aplicação e enviar à Store. Crie uma pasta na raíz da pasta /src chamada reducers. Dentro dela, crie um arquivo index.js com o conteúdo:
+
+*/
+
+import { clickReducer } from "./clickReducer";
+// import { OtherReducer } from "./otherReducer";
+import { combineReducers } from "redux";
+
+export const Reducers = combineReducers({
+    clickState: clickReducer,
+    // otherState: otherReducer
+});
+
+###
+
+/**
+
+REDUCER 1
+
+src/reducers/clickReducer.js
+
+Caso sua aplicação possua vários reducers, você pode combiná-los para enviá-los à Store da seguinte forma, usando o método combineReducers.
+
+A chave do objeto é o nome na qual o estado será acessado pela aplicação, enquanto o seu valor é o Reducer, função pura que filtra os dados e que criaremos adiante. Ficará de sua escolha caso prefira usar o mesmo nome para a chave e valor.
+
+Aqui definimos qual será a chave do Reducer na Store quando quisermos acessar o seu estado, além de podermos combinar vários Reducers para serem conectados à Store.
+
+Crie o arquivo clickReducer.js na mesma pasta com o seguinte conteúdo:
+
+*/
+
+import { CLICK_UPDATE_VALUE } from "../actions/actionTypes";
+
+const initialState = {
+    newValue: ""
+}
+
+export const clickReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case CLICK_UPDATE_VALUE:
+            return {
+                ...state,
+                newValue: action.newValue
+            };
+        default:
+            return state;
+    }
+};
+
+/**
+
+Este será o nosso Reducer que será acionado pela Action caso o type dela seja CLICK_UPDATE_VALUE, caso contrário manterá o estado atual.
+
+IMPORTANTE: esta função deverá ser pura, ou seja, retornar um novo objeto, pois lembrando, a Store é imutável. Conseguimos preservar o restante do estado usando o ...state, que recupera o estado anterior e passa para o novo objeto.
+
+*/
+
+
+
+
+#############
+PROVIDER
+#############
+
+/**
+
+ALTERAR
+src/index.js
+
+
+Crie o Provider para conectar a aplicação à Store
+
+No arquivo src/index.js faça algumas alterações, ele deverá ficar assim (negritei as mudanças)
+
+*/
+
+#########
+ANTES
+#########
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.scss';
+import App from './App';
+import * as serviceWorker from './serviceWorker';
+
+ReactDOM.render(<App />, document.getElementById('root'));
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://bit.ly/CRA-PWA
+serviceWorker.unregister();
+
+
+#########
+DEPOIS
+#########
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.scss';
+import App from './App';
+import * as serviceWorker from './serviceWorker';
+
+// INSERIDO
+import { Provider } from "react-redux";
+import { Store } from "./store";
+// import registerServiceWorker from "./registerServiceWorker";
+
+ReactDOM.render(
+    <Provider store={Store}>
+        <App />
+    </Provider>
+, document.getElementById('root'));
+
+serviceWorker.unregister();
+// registerServiceWorker();
+
+/**
+
+Aqui é onde o estado da Store se conectará com toda a aplicação, através do Provider Pattern, que possibilita que a Store seja acessível a todos os componentes abaixo dele. Veja mais sobre em:
+
+https://medium.com/@oieduardorabelo/padrões-em-react-provider-pattern-b520c37ed733
+
+*/
+
+
+
+
+#############
+CONEXAO ESTADO A STORE
+#############
+
+/**
+
+ALTERAR
+src/App.js QUE JA ESTA EM src/pages/index.js
+
+Para fazer a conexão com a Store, agora devemos atualizar o nosso componente src/App.js:
+
+*/
+
+#########
+ANTES
+#########
+
+// import React from 'react';
+import React, { Component } from 'react';
+import logo from '../logo.svg';
+import '../App.scss';
+
+function App() {
+    return (
+        <div className="App">
+            <header className="App-header">
+                <img src={logo} className="App-logo" alt="logo" />
+                <p>
+                    Edit <code>src/App.js</code> and save to reload.
+        </p>
+                <a
+                    className="App-link"
+                    href="https://reactjs.org"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Learn React
+        </a>
+            </header>
+        </div>
+    );
+}
+export default App;
+
+
+#########
+DEPOIS
+#########
+
+import React from 'react';
+import logo from '../logo.svg';
+import '../App.scss';
+
+// INSERIDO
+import { connect } from "react-redux";
+
+// function App() {
+class App extends Component {
+    render() {
+        const { newValue } = this.props;
+        
+        return (
+            <div className="App">
+                {/* <header className="App-header">
+                    <img src={logo} className="App-logo" alt="logo" />
+                    <p>
+                        Edit <code>src/App.js</code> and save to reload.
+            </p>
+                    <a
+                        className="App-link"
+                        href="https://reactjs.org"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Learn React
+            </a>
+                </header> */}
+                
+                <input type="text" />
+                <button>
+                    Click me!
+                </button>
+
+                <h1>{newValue}</h1>
+
+            </div>
+        );
+    }
+}
+
+// export default App;
+const mapStateToProps = store => ({
+    newValue: store.clickState.newValue
+})
+
+export default connect(mapStateToProps)(App);
+
+
+/**
+
+O método mapStateToProps transforma um trecho do estado da Store em uma prop utilizável pelo componente, com o nome newValue.
+
+Ao acessarmos a chave clickState, que foi definida no arquivo src/reducers/index.js na linha 5:
+
+clickState: clickReducer
+
+… podemos extrair a sua chave newValue, que foi definida no arquivo src/reducers/clickReducer.js na linha 12:
+
+newValue: action.newValue
+
+--
+
+No momento de exportar o componente, precisamos fazer a sua conexão através do método connect do React Redux, passando o método mapStateToProps como parâmetro e o componente atual como parâmetro na função retornada. Este padrão no React se chama High Order Component.
+
+Ao fazermos esta conexão, podemos usar o newValue como prop no componente:
+
+...
+const { newValue } = this.props;
+...
+...
+<h1>{newValue}</h1>
+...
+
+--
+
+Para sabermos se está funcionando, basta trocarmos o initialState no arquivo src/reducers/clickReducer.js na linha 4 e conferirmos se reflete na página:
+
+const initialState = {
+  newValue: 'Atualizado via Redux!'
+};
+
+
+*/
+
+
+
+
+#############
+DISPARANDO UM EVENTO PARA EVOLUIR A STORE
+#############
+
+/**
+
+ALTERAR src/pages/index.js
+
+Agora vamos criar a funcionalidade de evoluir o estado da Store a partir do preenchimento do input e o clique no botão Click me!. O código deverá novamente ser atualizado conforme a seguir:
+
+*/
+
+#########
+ANTES
+#########
+
+// import React from 'react';
+import React, { Component } from 'react';
+import logo from '../logo.svg';
+import '../App.scss';
+
+// INSERIDO
+import { connect } from "react-redux";
+
+// function App() {
+class App extends Component {
+    render() {
+        const { newValue } = this.props;
+        
+        return (
+            <div className="App">
+                {/* <header className="App-header">
+                    <img src={logo} className="App-logo" alt="logo" />
+                    <p>
+                        Edit <code>src/App.js</code> and save to reload.
+            </p>
+                    <a
+                        className="App-link"
+                        href="https://reactjs.org"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Learn React
+            </a>
+                </header> */}
+                
+                <input type="text" />
+                <button>
+                    Click me!
+                </button>
+
+                <h1>{newValue}</h1>
+
+            </div>
+        );
+    }
+}
+
+// export default App;
+const mapStateToProps = store => ({
+    newValue: store.clickState.newValue
+})
+
+export default connect(mapStateToProps)(App);
+
+
+#########
+DEPOIS
+#########
+
+// import React from 'react';
+import React, { Component } from 'react';
+import logo from '../logo.svg';
+import '../App.scss';
+
+// INSERIDO
+import { connect } from "react-redux";
+
+// INSERIDO 2
+import { bindActionCreators } from 'redux';
+import { clickButton } from '../actions';
+
+// function App() {
+class App extends Component {
+    state = {
+        inputValue: ''
+    }
+    inputChange = event => {
+        this.setState({
+            inputValue: event.target.value
+        })
+    }
+
+    render() {
+        // const { newValue } = this.props;
+        const {
+            clickButton,
+            newValue
+        } = this.props;
+        const { inputValue } = this.state;
+        
+        return (
+            <div className="App">
+                {/* <header className="App-header">
+                    <img src={logo} className="App-logo" alt="logo" />
+                    <p>
+                        Edit <code>src/App.js</code> and save to reload.
+            </p>
+                    <a
+                        className="App-link"
+                        href="https://reactjs.org"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Learn React
+            </a>
+                </header> */}
+                
+                {/* <input type="text" />
+                <button>
+                    Click me!
+                </button> */}
+
+                <input
+                    onChange={this.inputChange}
+                    type='text'
+                    value={inputValue}
+                />
+                <button onClick={() => clickButton(inputValue)}>
+                    Click me!
+        </button>
+
+                <h1>{newValue}</h1>
+
+            </div>
+        );
+    }
+}
+
+// export default App;
+const mapStateToProps = store => ({
+    newValue: store.clickState.newValue
+})
+
+// INSERIDO 2
+const mapDispatchToProps = dispatch => bindActionCreators({ clickButton }, dispatch);
+
+// export default connect(mapStateToProps)(App);
+// INSERIDO 2
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+/**
+
+Criamos o método mapDispatchToProps para converter a Action Creator clickButton que criamos no arquivo src/actions/index.js em uma prop para o componente. O método bindActionCreators facilita este trabalho. Ao clicar no botão Click me!, o valor do state inputValue que foi alterado pelo input text é enviado à Store pelo método clickButton, que foi mapeado no componente como prop.
+
+Por fim, passamos o método mapDispatchToProps como segundo parâmetro do método connect. Agora é só testar!
+
+É importante lembrar que há diversas formas de se disparar eventos à Store, eu abordarei algumas delas em um futuro artigo.
+
+*/
+
+
+
+
+
+
 
 
