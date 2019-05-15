@@ -737,7 +737,7 @@ function Planet(res) {
                         <li><strong>Population: </strong> {res.planetProps.population}</li>
                         <li><strong>Climate: </strong>{res.planetProps.climate}</li>
                         <li><strong>Terrain: </strong> {res.planetProps.terrain}</li>
-                        <li><strong>Featured in </strong> {res.planetProps.films.lenght?res.planetProps.films.lenght:0} films</li>
+                        <li><strong>Featured in </strong> {res.planetProps.films.length?res.planetProps.films.length:0} films</li>
                     </ul>
                     <button className="btn-primary">Next</button>
                 </div>
@@ -821,7 +821,7 @@ function Planet(res) {
                         <li><strong>Population: </strong> {res.planetProps.population}</li>
                         <li><strong>Climate: </strong>{res.planetProps.climate}</li>
                         <li><strong>Terrain: </strong> {res.planetProps.terrain}</li>
-                        <li><strong>Featured in </strong> {res.planetProps.films.lenght?res.planetProps.films.lenght:0} films</li>
+                        <li><strong>Featured in </strong> {res.planetProps.films.length?res.planetProps.films.length:0} films</li>
                     </ul>
                     <button className="btn-primary">Next</button>
                 </div>
