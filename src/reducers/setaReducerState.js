@@ -6,7 +6,22 @@ const initialStateInput = {
 }
 
 const initialStatePlanet = {
-    novoValorPlaneta: {}
+    novoValorPlaneta: {
+        climate: "",
+        created: "",
+        diameter: "",
+        edited: "",
+        films: [],
+        gravity: "",
+        name: "",
+        orbital_period: "",
+        population: "",
+        residents: [],
+        rotation_period: "",
+        surface_water: "",
+        terrain: "",
+        url: ""
+    }
     // novoValorInput: "ATUALIZADO VIA REDUCER"
 }
 
@@ -25,6 +40,10 @@ export const setaReducerStateInput = (state = initialStateInput, action) => {
 export const setaReducerStatePlanet = (state = initialStatePlanet, action) => {
     switch (action.type) {
         case ACTIONS.SET_PLANET:
+            // alert(ACTIONS.SET_PLANET);
+            /* console.log("a");
+            console.log(action.novoValorPlaneta)
+            console.log("b"); */
             return {
                 ...state,
                 novoValorPlaneta: action.novoValorPlaneta

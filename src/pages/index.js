@@ -31,10 +31,14 @@ class App extends Component {
         axios
         .post(`https://swapi.co/api/planets/${idPlanet}`)
         .then(res =>  {
-            console.log(res.data);
+            console.log(this.props.novoValorPlanetaProps);
             this.props.atualizarValorPlanetProps(res.data);
         })
         .catch(res => console.log("Ocorreu um erro, tente novamente mais tarde: " + res));
+    }
+
+    componentDidMount(){
+        this.getPlanet();
     }
 
     render() {
@@ -45,7 +49,6 @@ class App extends Component {
         } = this.props;
         const { inputValue } = this.state;
         
-        this.getPlanet();
         
         return (
             <div className="App">
@@ -69,7 +72,7 @@ class App extends Component {
                     Click me!
                 </button> */}
 
-                <input
+                {/* <input
                     onChange={this.inputChange}
                     type='text'
                     value={inputValue}
@@ -78,8 +81,11 @@ class App extends Component {
                     Click me!
                 </button>
 
-                <h1>{novoValorInputProps}</h1>
-                <Planet />
+                <h1>{novoValorInputProps}</h1> */}
+
+                <Planet
+                    planetProps = {this.props.novoValorPlanetaProps}
+                />
 
             </div>
         );
@@ -89,10 +95,10 @@ class App extends Component {
 // export default App;
 const mapStateToProps = store => ({
     novoValorInputProps: store.setaReducerStateInputStore.novoValorInput,
-    novoValorPlanetProps: store.setaReducerStatePlanetStore.novoValorPlanet
+    novoValorPlanetaProps: store.setaReducerStatePlanetStore.novoValorPlaneta
 }/* , () => {
     console.log("a");
-    console.log(store.setaReducerStatePlanetStore.novoValorPlanet);
+    console.log(store.setaReducerStatePlanetStore.novoValorPlaneta);
     console.log("b");    
 } */)
 

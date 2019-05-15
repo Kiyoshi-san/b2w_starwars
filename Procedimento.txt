@@ -217,7 +217,22 @@ const initialStateInput = {
 }
 
 const initialStatePlanet = {
-    novoValorPlaneta: {}
+    novoValorPlaneta: {
+        climate: "",
+        created: "",
+        diameter: "",
+        edited: "",
+        films: [],
+        gravity: "",
+        name: "",
+        orbital_period: "",
+        population: "",
+        residents: [],
+        rotation_period: "",
+        surface_water: "",
+        terrain: "",
+        url: ""
+    }
     // novoValorInput: "ATUALIZADO VIA REDUCER"
 }
 
@@ -236,6 +251,10 @@ export const setaReducerStateInput = (state = initialStateInput, action) => {
 export const setaReducerStatePlanet = (state = initialStatePlanet, action) => {
     switch (action.type) {
         case ACTIONS.SET_PLANET:
+            // alert(ACTIONS.SET_PLANET);
+            /* console.log("a");
+            console.log(action.novoValorPlaneta)
+            console.log("b"); */
             return {
                 ...state,
                 novoValorPlaneta: action.novoValorPlaneta
@@ -565,10 +584,14 @@ class App extends Component {
         axios
         .post(`https://swapi.co/api/planets/${idPlanet}`)
         .then(res =>  {
-            console.log(res.data);
+            console.log(this.props.novoValorPlanetaProps);
             this.props.atualizarValorPlanetProps(res.data);
         })
         .catch(res => console.log("Ocorreu um erro, tente novamente mais tarde: " + res));
+    }
+
+    componentDidMount(){
+        this.getPlanet();
     }
 
     render() {
@@ -579,7 +602,6 @@ class App extends Component {
         } = this.props;
         const { inputValue } = this.state;
         
-        this.getPlanet();
         
         return (
             <div className="App">
@@ -603,7 +625,7 @@ class App extends Component {
                     Click me!
                 </button> */}
 
-                <input
+                {/* <input
                     onChange={this.inputChange}
                     type='text'
                     value={inputValue}
@@ -612,8 +634,11 @@ class App extends Component {
                     Click me!
                 </button>
 
-                <h1>{novoValorInputProps}</h1>
-                <Planet />
+                <h1>{novoValorInputProps}</h1> */}
+
+                <Planet
+                    planetProps = {this.props.novoValorPlanetaProps}
+                />
 
             </div>
         );
@@ -623,10 +648,10 @@ class App extends Component {
 // export default App;
 const mapStateToProps = store => ({
     novoValorInputProps: store.setaReducerStateInputStore.novoValorInput,
-    novoValorPlanetProps: store.setaReducerStatePlanetStore.novoValorPlanet
+    novoValorPlanetaProps: store.setaReducerStatePlanetStore.novoValorPlaneta
 }/* , () => {
     console.log("a");
-    console.log(store.setaReducerStatePlanetStore.novoValorPlanet);
+    console.log(store.setaReducerStatePlanetStore.novoValorPlaneta);
     console.log("b");    
 } */)
 
@@ -652,6 +677,57 @@ Por fim, passamos o método mapDispatchToProps como segundo parâmetro do métod
 */
 
 
+
+
+
+#############
+PAGINA E COMPONENTE EXTRA
+#############
+
+/**
+src/pages/Planet.js
+
+VAMOS CRIAR AGORA UM COMPONENTE PARA SER CARREGADO DENTRO DO src/index.js
+
+*/
+
+// import React from 'react';
+import React from 'react';
+// import '../Planet.scss';
+
+/**
+
+planetProps:{
+    climate: "temperate"
+    created: "2014-12-20T17:50:47.864000Z"
+    diameter: "unknown"
+    edited: "2014-12-20T20:58:18.517000Z"
+    films: []
+    gravity: "1"
+    name: "Skako"
+    orbital_period: "384"
+    population: "500000000000"
+    residents: ["https://swapi.co/api/people/76/"]
+    rotation_period: "27"
+    surface_water: "unknown"
+    terrain: "urban, vines"
+    url: "https://swapi.co/api/planets/56/"
+}
+
+*/
+
+function Planet(res) {
+    console.log("a")
+    console.log(res.planetProps.name)
+    console.log("a")
+    return (
+        <div className="App">
+            <h1>{res.planetProps.name}</h1>
+        </div>
+    );
+}
+
+export default Planet;
 
 *******************************************************
 
