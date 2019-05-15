@@ -6,6 +6,20 @@ senha: Deusefiel1*
 
 --
 
+###################
+WORKSPACE
+###################
+
+F:\kiu\Projetos\ReactJS\b2w\b2w_starwars\src\index.js
+F:\kiu\Projetos\ReactJS\b2w\b2w_starwars\src\actions\actionTypes.js
+F:\kiu\Projetos\ReactJS\b2w\b2w_starwars\src\actions\index.js
+F:\kiu\Projetos\ReactJS\b2w\b2w_starwars\src\pages\index.js
+F:\kiu\Projetos\ReactJS\b2w\b2w_starwars\src\reducers\setaReducerState.js
+F:\kiu\Projetos\ReactJS\b2w\b2w_starwars\src\reducers\index.js
+F:\kiu\Projetos\ReactJS\b2w\b2w_starwars\src\store\index.js
+
+--
+
 PROCEDIMENTOS
 
 NA PASTA DO PROJETO (b2w)
@@ -100,23 +114,6 @@ ACTIONS
 
 /**
 
-src/actions/index.js
-
-Aqui a função é a Action Creator, e o que ela retorna, que é o objeto, é a Action. Ao ser disparada, ela comunicará ao Reducer que o type é CLICK_UPDATE_VALUE, além do valor newValue: value que deverá ser atualizado na Store. Novamente aqui, caso prefira usar o mesmo nome para chave e valor, ficará de sua escolha.
-
-*/
-
-import { ACTIONS } from './actionTypes';
-
-export const clickButton = value => ({
-    type: ACTIONS.CLICK_UPDATE_VALUE,
-    novoValorInput: value
-})
-
-###
-
-/**
-
 ACTION TYPES
 
 src/actions/actionTypes.js
@@ -125,8 +122,33 @@ Os types, que são as Action Types, recomendo separar num arquivo próprio para 
 
 */
 
-export const CLICK_UPDATE_VALUE = "CLICK_UPDATE_VALUE";
+export const ACTIONS = {
+    CLICK_UPDATE_VALUE: "CLICK_UPDATE_VALUE",
+    SET_PLANET: "SET_PLANET"
+};
 
+
+###
+
+/**
+
+src/actions/index.js
+
+Aqui a função é a Action Creator, e o que ela retorna, que é o objeto, é a Action. Ao ser disparada, ela comunicará ao Reducer que o type é CLICK_UPDATE_VALUE, além do valor newValue: value que deverá ser atualizado na Store. Novamente aqui, caso prefira usar o mesmo nome para chave e valor, ficará de sua escolha.
+
+*/
+
+import { ACTIONS } from './actionTypes';
+
+export const atualizarValorInput = paramValorDoInput => ({
+    type: ACTIONS.CLICK_UPDATE_VALUE,
+    novoValorInput: paramValorDoInput
+})
+
+export const atualizarValorPlanet = value => ({
+    type: ACTIONS.SET_PLANET,
+    novoValorPlaneta: value
+})
 
 #############
 STORE
@@ -159,13 +181,14 @@ Como a Store é a Única Fonte de Verdade, teremos que combinar todos os reducer
 
 */
 
-import { clickReducer } from "./clickReducer";
+import { setaReducerStateInput, setaReducerStatePlanet } from "./setaReducerState";
 // import { OtherReducer } from "./otherReducer";
 import { combineReducers } from "redux";
 
 export const Reducers = combineReducers({
-    clickReducerStore: clickReducer,
+    setaReducerStateInputStore: setaReducerStateInput,
     // otherState: otherReducer
+    setaReducerStatePlanetStore: setaReducerStatePlanet
 });
 
 ###
@@ -174,7 +197,7 @@ export const Reducers = combineReducers({
 
 REDUCER 1
 
-src/reducers/clickReducer.js
+src/reducers/setaReducerState.js
 
 Caso sua aplicação possua vários reducers, você pode combiná-los para enviá-los à Store da seguinte forma, usando o método combineReducers.
 
@@ -182,23 +205,40 @@ A chave do objeto é o nome na qual o estado será acessado pela aplicação, en
 
 Aqui definimos qual será a chave do Reducer na Store quando quisermos acessar o seu estado, além de podermos combinar vários Reducers para serem conectados à Store.
 
-Crie o arquivo clickReducer.js na mesma pasta com o seguinte conteúdo:
+Crie o arquivo setaReducerState.js na mesma pasta com o seguinte conteúdo:
 
 */
 
 import { ACTIONS } from "../actions/actionTypes";
 
-const initialState = {
-    novoValorInput: ""
+const initialStateInput = {
+    novoValorInput: "",
     // novoValorInput: "ATUALIZADO VIA REDUCER"
 }
 
-export const clickReducer = (state = initialState, action) => {
+const initialStatePlanet = {
+    novoValorPlaneta: {}
+    // novoValorInput: "ATUALIZADO VIA REDUCER"
+}
+
+export const setaReducerStateInput = (state = initialStateInput, action) => {
     switch (action.type) {
         case ACTIONS.CLICK_UPDATE_VALUE:
             return {
                 ...state,
                 novoValorInput: action.novoValorInput
+            };
+        default:
+            return state;
+    }
+};
+
+export const setaReducerStatePlanet = (state = initialStatePlanet, action) => {
+    switch (action.type) {
+        case ACTIONS.SET_PLANET:
+            return {
+                ...state,
+                novoValorPlaneta: action.novoValorPlaneta
             };
         default:
             return state;
@@ -389,9 +429,9 @@ O método mapStateToProps transforma um trecho do estado da Store em uma prop ut
 
 Ao acessarmos a chave clickState, que foi definida no arquivo src/reducers/index.js na linha 5:
 
-clickState: clickReducer
+clickState: setaReducerState
 
-… podemos extrair a sua chave newValue, que foi definida no arquivo src/reducers/clickReducer.js na linha 12:
+… podemos extrair a sua chave newValue, que foi definida no arquivo src/reducers/setaReducerState.js na linha 12:
 
 newValue: action.newValue
 
@@ -410,7 +450,7 @@ const { newValue } = this.props;
 
 --
 
-Para sabermos se está funcionando, basta trocarmos o initialState no arquivo src/reducers/clickReducer.js na linha 4 e conferirmos se reflete na página:
+Para sabermos se está funcionando, basta trocarmos o initialState no arquivo src/reducers/setaReducerState.js na linha 4 e conferirmos se reflete na página:
 
 const initialState = {
   newValue: 'Atualizado via Redux!'
@@ -502,7 +542,7 @@ import { connect } from "react-redux";
 
 // INSERIDO 2
 import { bindActionCreators } from 'redux';
-import { clickButton } from '../actions';
+import { atualizarValorInput, atualizarValorPlanet } from '../actions';
 
 import axios from "axios";
 
@@ -513,6 +553,7 @@ class App extends Component {
     state = {
         inputValue: ''
     }
+    
     inputChange = event => {
         this.setState({
             inputValue: event.target.value
@@ -523,14 +564,17 @@ class App extends Component {
         let idPlanet = Math.floor(Math.random() * 61) + 1;
         axios
         .post(`https://swapi.co/api/planets/${idPlanet}`)
-        .then(res =>  console.log(res))
+        .then(res =>  {
+            console.log(res.data);
+            this.props.atualizarValorPlanetProps(res.data);
+        })
         .catch(res => console.log("Ocorreu um erro, tente novamente mais tarde: " + res));
     }
 
     render() {
         // const { novoValorInput } = this.props;
         const {
-            clickButtonProps,
+            atualizarValorInputProps,
             novoValorInputProps
         } = this.props;
         const { inputValue } = this.state;
@@ -564,7 +608,7 @@ class App extends Component {
                     type='text'
                     value={inputValue}
                 />
-                <button onClick={() => clickButtonProps(inputValue)}>
+                <button onClick={() => atualizarValorInputProps(inputValue)}>
                     Click me!
                 </button>
 
@@ -578,13 +622,19 @@ class App extends Component {
 
 // export default App;
 const mapStateToProps = store => ({
-    novoValorInputProps: store.clickReducerStore.novoValorInput
-})
+    novoValorInputProps: store.setaReducerStateInputStore.novoValorInput,
+    novoValorPlanetProps: store.setaReducerStatePlanetStore.novoValorPlanet
+}/* , () => {
+    console.log("a");
+    console.log(store.setaReducerStatePlanetStore.novoValorPlanet);
+    console.log("b");    
+} */)
 
 // INSERIDO 2
 const mapDispatchToProps = dispatch => bindActionCreators({ 
-    // clickButton
-    clickButtonProps: clickButton
+    // atualizarValorInput
+    atualizarValorInputProps: atualizarValorInput,
+    atualizarValorPlanetProps: atualizarValorPlanet
 }, dispatch);
 
 // export default connect(mapStateToProps)(App);

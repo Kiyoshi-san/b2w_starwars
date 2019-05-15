@@ -1,6 +1,11 @@
 import { ACTIONS } from './actionTypes';
 
-export const clickButton = value => ({
+export const atualizarValorInput = paramValorDoInput => ({
     type: ACTIONS.CLICK_UPDATE_VALUE,
-    novoValorInput: value
+    novoValorInput: paramValorDoInput
+})
+
+export const atualizarValorPlanet = value => ({
+    type: ACTIONS.SET_PLANET,
+    novoValorPlaneta: value
 })

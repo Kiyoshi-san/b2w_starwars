@@ -1,8 +1,9 @@
-import { clickReducer } from "./clickReducer";
+import { setaReducerStateInput, setaReducerStatePlanet } from "./setaReducerState";
 // import { OtherReducer } from "./otherReducer";
 import { combineReducers } from "redux";
 
 export const Reducers = combineReducers({
-    clickReducerStore: clickReducer,
+    setaReducerStateInputStore: setaReducerStateInput,
     // otherState: otherReducer
+    setaReducerStatePlanetStore: setaReducerStatePlanet
 });
