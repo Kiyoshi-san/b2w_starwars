@@ -106,11 +106,11 @@ Aqui a função é a Action Creator, e o que ela retorna, que é o objeto, é a 
 
 */
 
-import { CLICK_UPDATE_VALUE } from './actionTypes';
+import { ACTIONS } from './actionTypes';
 
 export const clickButton = value => ({
-    type: CLICK_UPDATE_VALUE,
-    newValue: value
+    type: ACTIONS.CLICK_UPDATE_VALUE,
+    novoValorInput: value
 })
 
 ###
@@ -164,7 +164,7 @@ import { clickReducer } from "./clickReducer";
 import { combineReducers } from "redux";
 
 export const Reducers = combineReducers({
-    clickState: clickReducer,
+    clickReducerStore: clickReducer,
     // otherState: otherReducer
 });
 
@@ -186,18 +186,19 @@ Crie o arquivo clickReducer.js na mesma pasta com o seguinte conteúdo:
 
 */
 
-import { CLICK_UPDATE_VALUE } from "../actions/actionTypes";
+import { ACTIONS } from "../actions/actionTypes";
 
 const initialState = {
-    newValue: ""
+    novoValorInput: ""
+    // novoValorInput: "ATUALIZADO VIA REDUCER"
 }
 
 export const clickReducer = (state = initialState, action) => {
     switch (action.type) {
-        case CLICK_UPDATE_VALUE:
+        case ACTIONS.CLICK_UPDATE_VALUE:
             return {
                 ...state,
-                newValue: action.newValue
+                novoValorInput: action.novoValorInput
             };
         default:
             return state;
@@ -527,10 +528,10 @@ class App extends Component {
     }
 
     render() {
-        // const { newValue } = this.props;
+        // const { novoValorInput } = this.props;
         const {
             clickButtonProps,
-            newValueProps
+            novoValorInputProps
         } = this.props;
         const { inputValue } = this.state;
         
@@ -567,7 +568,7 @@ class App extends Component {
                     Click me!
                 </button>
 
-                <h1>{newValueProps}</h1>
+                <h1>{novoValorInputProps}</h1>
                 <Planet />
 
             </div>
@@ -577,7 +578,7 @@ class App extends Component {
 
 // export default App;
 const mapStateToProps = store => ({
-    newValueProps: store.clickState.newValue
+    novoValorInputProps: store.clickReducerStore.novoValorInput
 })
 
 // INSERIDO 2

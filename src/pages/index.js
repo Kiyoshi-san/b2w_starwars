@@ -34,10 +34,10 @@ class App extends Component {
     }
 
     render() {
-        // const { newValue } = this.props;
+        // const { novoValorInput } = this.props;
         const {
             clickButtonProps,
-            newValueProps
+            novoValorInputProps
         } = this.props;
         const { inputValue } = this.state;
         
@@ -74,7 +74,7 @@ class App extends Component {
                     Click me!
                 </button>
 
-                <h1>{newValueProps}</h1>
+                <h1>{novoValorInputProps}</h1>
                 <Planet />
 
             </div>
@@ -84,7 +84,7 @@ class App extends Component {
 
 // export default App;
 const mapStateToProps = store => ({
-    newValueProps: store.clickState.newValue
+    novoValorInputProps: store.clickReducerStore.novoValorInput
 })
 
 // INSERIDO 2
