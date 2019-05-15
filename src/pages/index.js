@@ -85,6 +85,7 @@ class App extends Component {
 
                 <Planet
                     planetProps = {this.props.novoValorPlanetaProps}
+                    atualizarValorPlaneta = {this.getPlanet.bind(this)}
                 />
 
             </div>

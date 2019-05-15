@@ -28,43 +28,45 @@ planetProps:{
 
 */
 
-function Planet(res) {
-    console.log("a")
-    console.log(res.planetProps.name)
-    console.log("a")
-    return (
-        <div className="App">
-
-            <div className="pricing-box-container">
-
-                <div className="pricing-box pricing-box-bg-image text-center">
-                    <h1 className="text-center">{res.planetProps.name}</h1>
-                    
-                    <ul className="features-list">
-                        <li><strong>Population: </strong> {res.planetProps.population}</li>
-                        <li><strong>Climate: </strong>{res.planetProps.climate}</li>
-                        <li><strong>Terrain: </strong> {res.planetProps.terrain}</li>
-                        <li><strong>Featured in </strong> {res.planetProps.films.length?res.planetProps.films.length:0} films</li>
-                    </ul>
-                    <button className="btn-primary">Next</button>
+// function Planet(props) {
+    const Planet = (props) => {
+        console.log("a")
+        console.log(props.planetProps.name, props.atualizarValorPlaneta)
+        console.log("b")
+    
+    
+        return (
+            <div className="App">
+    
+                <div className="pricing-box-container">
+    
+                    <div className="pricing-box pricing-box-bg-image text-center">
+                        <h1 className="text-center">{props.planetProps.name}</h1>
+                        
+                        <ul className="features-list">
+                            <li><strong>Population: </strong> {props.planetProps.population}</li>
+                            <li><strong>Climate: </strong>{props.planetProps.climate}</li>
+                            <li><strong>Terrain: </strong> {props.planetProps.terrain}</li>
+                            <li><strong>Featured in </strong> {props.planetProps.films.length?props.planetProps.films.length:0} films</li>
+                        </ul>
+                        <button className="btn-primary" onClick={props.atualizarValorPlaneta}>Next</button>
+                    </div>
+    
                 </div>
-
+    
+                {/* <footer>
+                    <p>
+                        Created with <i className="fa fa-heart"></i> by
+                        <a target="_blank" href="https://florin-pop.com">Florin Pop</a>
+                        - Read about how I created it
+                        <a target="_blank" href="https://www.florin-pop.com/blog/2019/02/how-to-create-pricing-plans/">in this article</a><br />
+                        Other projects on
+                        <a target="_blank" href="https://github.com/florinpop17/work-journal/">Github</a>
+                    </p>
+                </footer> */}
+    
             </div>
-
-            {/* <footer>
-                <p>
-                    Created with <i className="fa fa-heart"></i> by
-                    <a target="_blank" href="https://florin-pop.com">Florin Pop</a>
-                    - Read about how I created it
-                    <a target="_blank" href="https://www.florin-pop.com/blog/2019/02/how-to-create-pricing-plans/">in this article</a><br />
-                    Other projects on
-                    <a target="_blank" href="https://github.com/florinpop17/work-journal/">Github</a>
-                </p>
-            </footer> */}
-
-
-        </div>
-    );
-}
-
-export default Planet;
+        );
+    }
+    
+    export default Planet;
